@@ -1,10 +1,9 @@
 
 package assemblerinterpretadorfacul;
 
+import Comandos.Comandos;
 import Monitor.Tela;
 import java.awt.Graphics;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 
 
@@ -16,9 +15,13 @@ public class Controle implements Runnable
     private Tela tela;
     private Graphics grafico;
     
+    
+    //private Comandos com;
+    
     public Controle(String titulo, int l , int a)
     {
         tela = new Tela(titulo, l, a);
+        //com = new Comandos("ADD");
     }
     
     
