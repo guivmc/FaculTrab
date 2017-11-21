@@ -2,8 +2,12 @@
 package assemblerinterpretadorfacul;
 
 import Comandos.Comandos;
+import Estado.Estado;
+import Estado.MenuEstado;
 import Monitor.Tela;
+import Teclado.Teclado;
 import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
 
 
 
@@ -14,29 +18,47 @@ public class Controle implements Runnable
     private Thread thread;
     private Tela tela;
     private Graphics grafico;
+    private BufferStrategy bs;
     
+
+    //ter acesso  ao teclado sem criar um novo controle
+    private Acessos acessos;
     
-    //private Comandos com;
+    private Teclado teclado;
+    
     
     public Controle(String titulo, int l , int a)
     {
         tela = new Tela(titulo, l, a);
-        //com = new Comandos("ADD");
+        
+        tela.getCanvas().createBufferStrategy(3);
+        
+        teclado = new Teclado();
+        
+        acessos = new Acessos(this);
+        
+        tela.getFrame().addKeyListener(teclado);
+            
     }
     
     
     public void desenhar()
     {
+        bs = tela.getCanvas().getBufferStrategy();
+        
+        grafico = bs.getDrawGraphics();
+        
         grafico.clearRect(0, 0, tela.getLargura(), tela.getAltura());
         
-        
+        Estado.getEstado().desenhar(grafico);
 
+        bs.show();
         grafico.dispose();
     }
     
     public void atualizar()
     {
-        
+      Estado.getEstado().atualizar();
     }
     
      public synchronized void start()
@@ -72,8 +94,11 @@ public class Controle implements Runnable
         }
     }
 
+  
+    @Override
     public void run() 
     {       
+       acessos.setEstado(acessos.getmEst());
        while(executando)
        {
            atualizar();
@@ -81,5 +106,16 @@ public class Controle implements Runnable
        }
        
        stop();
-    }   
+    }  
+    
+    //Getters
+    public Teclado getTeclado()
+    {
+        return teclado;
+    }
+    
+    public Tela getTela()
+    {
+        return tela;
+    } 
 }

@@ -3,14 +3,22 @@ package Monitor;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Tela 
 {
-    private JFrame frame;
+    private JFrame frame, frame2;
+    private JPanel panel;
+    private JTextField text;
     private Canvas canvas;
     
-    private int largura, altura;
+    private int largura, altura, posY = 0;
+    
+    private String jText = "";
      
     public Tela(String titulo, int l, int a)
     {
@@ -26,9 +34,10 @@ public class Tela
         frame = new JFrame(titulo);
         frame.setSize(largura, altura);
         frame.setVisible(true);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+             
              
         // create and set canvas
         canvas = new Canvas();
@@ -40,6 +49,7 @@ public class Tela
        
         //add canvas to the JFrame
         frame.add(canvas);
+        
     }
     
     
@@ -63,5 +73,15 @@ public class Tela
     public int getAltura()
     {
         return altura;    
+    }
+    
+    public String getJText()
+    {
+        return jText;
+    }
+    
+    public int getPosY()
+    {
+        return posY;
     }
 }
